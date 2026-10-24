@@ -139,7 +139,13 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DataFrame.cpp" />
     <ClCompile Include="RejestratorTelemetriiPokladowej.cpp" />
+    <ClCompile Include="TelemetryBlackBox.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DataFrame.h" />
+    <ClInclude Include="TelemetryBlackBox.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -18,5 +18,19 @@
     <ClCompile Include="RejestratorTelemetriiPokladowej.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="TelemetryBlackBox.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="DataFrame.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TelemetryBlackBox.h">
+      <Filter>Pliki źródłowe</Filter>
+    </ClInclude>
+    <ClInclude Include="DataFrame.h">
+      <Filter>Pliki źródłowe</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
