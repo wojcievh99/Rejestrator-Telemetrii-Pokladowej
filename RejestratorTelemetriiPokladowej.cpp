@@ -1,7 +1,11 @@
 ﻿
 #include <iostream>
 
+// Wojciech Niedbała, rekrutacja do Simba Software
+
 int main()
 {
-    std::cout << "Hello World!\n";
+    
+
+    return 0;
 }
