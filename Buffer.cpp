@@ -52,7 +52,7 @@ void Buffer::setAltitude(uint32_t& dataFrame, uint16_t altitude) {
 
 	uint8_t state = dataFrame & (0b111); // first 3 bits
 	if (state == 0 or state == 4)
-		return;
+		altitude = 0;
 	// set to min
 
 	bool baro_error = (dataFrame & (1 << 4)) >> 4; // 4th bit
@@ -106,12 +106,22 @@ void Buffer::recordDataFrame(uint8_t state, bool parachute,
 	makeSpaceInBuffer();
 	cyclicBuffer_[0] = df;
 
+	if (bufferEmpty_)
+		bufferEmpty_ = false;
+
 }
 
-uint32_t Buffer::getLastDataFrame(uint8_t& state, bool& parachute,
-	bool& baro_error, uint16_t& altitude, uint8_t& checksum) 
+bool Buffer::getLastDataFrame(
+	uint8_t& state, bool& parachute, bool& baro_error, 
+	uint16_t& altitude, uint8_t& checksum, uint32_t& df
+) 
 {
-	uint32_t df = cyclicBuffer_[0];
+
+	if (bufferEmpty_)
+		return false;
+
+	// dataframe:
+	df = cyclicBuffer_[0];
 
 	// state:
 	state = (df & 0b111);
@@ -126,7 +136,7 @@ uint32_t Buffer::getLastDataFrame(uint8_t& state, bool& parachute,
 	altitude = ((df & (0xFFFF << 8)) >> 8);
 
 	// checksum:
-	checksum = df >> 24;
+	checksum = df >> 24;	
 
-	return df;
+	return true;
 }

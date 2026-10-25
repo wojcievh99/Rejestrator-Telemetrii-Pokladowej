@@ -2,6 +2,7 @@
 #include "Buffer.h"
 
 #include <iostream>
+#include <bitset>
 
 void TelemetryBlackBox::onRocketStateChange(RocketState state) {
 
@@ -17,8 +18,12 @@ void TelemetryBlackBox::onParachuteDeployed() {
 
 void TelemetryBlackBox::onBaroReading(bool error, uint16_t value) {
 	
-	if (!error)
+	if (!error) {
+
 		altitude_ = value;
+		baro_error_ = false;
+
+	}
 	else
 		baro_error_ = true;
 	
@@ -38,9 +43,17 @@ uint32_t TelemetryBlackBox::getLastDataframe() {
 	bool parachute, baro_error; 
 	uint16_t altitude; 
 
-	uint32_t df = Buffer::instance().getLastDataFrame(
-		state, parachute, baro_error, altitude, checksum
-	);
+	uint32_t df; 
+	
+	if (!Buffer::instance().getLastDataFrame(
+		state, parachute, baro_error, altitude, checksum, df)
+		)
+	{
+		
+		std::cout << "\n-===== No DataFrame Records =====-\n";
+		return 0;
+
+	}
 
 	std::cout << "\n-===== Last DataFrame Recorded =====-\n\n";
 
@@ -74,7 +87,7 @@ uint32_t TelemetryBlackBox::getLastDataframe() {
 
 	std::cout << "ALTITUDE:\t\t" << altitude << "\n";
 
-	std::cout << "CHECKSUM:\t\t" << checksum << "\n";
+	std::cout << "CHECKSUM:\t\t" << std::bitset<8>(checksum) << "\n\n";
 
 	if (Buffer::instance().validateChecksum(df))
 		return df;

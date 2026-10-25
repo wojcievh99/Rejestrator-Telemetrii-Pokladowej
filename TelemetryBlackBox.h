@@ -39,6 +39,7 @@ public:
 	* @Return Ostatnia ramka zapisana do bufora , 
 	jeśli xor się zgadza .
 	0 xFFFFFFFF jeśli suma kontrolna jest niepoprawna .
+	DOPISANE: 0 jeśli nie ma zapisów
 	*/
 	uint32_t getLastDataframe();
 };

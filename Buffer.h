@@ -8,6 +8,7 @@
 class Buffer {
 
 	uint32_t cyclicBuffer_[16] = { 0 };
+	bool bufferEmpty_ = true;
 
 	/*
 		0-2		state
@@ -41,8 +42,15 @@ public:
 		bool baro_error, uint16_t altitude);
 
 	// decoding also
-	uint32_t getLastDataFrame(uint8_t& state, bool& parachute,
-		bool& baro_error, uint16_t& altitude, uint8_t& checksum);
+	/*
+	@Return
+		false jeśli buffer jest pusty
+		true jeśli jest coś co można odczytać
+	*/
+	bool getLastDataFrame(
+		uint8_t& state, bool& parachute, bool& baro_error, 
+		uint16_t& altitude, uint8_t& checksum, uint32_t& df
+	);
 
 };
 
