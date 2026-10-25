@@ -42,4 +42,9 @@ public:
 	DOPISANE: 0 jeśli nie ma zapisów
 	*/
 	uint32_t getLastDataframe();
+
+	// @brief loguje na konsolę wszystkie zapisy z buffora
+	// bez dekodowania
+	void getAllRecords();
+	
 };

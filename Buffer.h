@@ -50,5 +50,8 @@ public:
 		uint16_t& altitude, uint8_t& checksum, uint32_t& df
 	);
 
+	// @Return ilość elementów
+	unsigned int getBuffer(uint32_t (&buffer)[16]);
+
 };
 

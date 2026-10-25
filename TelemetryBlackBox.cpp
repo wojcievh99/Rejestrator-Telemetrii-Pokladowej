@@ -61,14 +61,14 @@ uint32_t TelemetryBlackBox::getLastDataframe() {
 		)
 	{
 		
-		std::cout << "\n-===== No DataFrame Records =====-\n";
+		std::cout << "\n-===== No DataFrame Records =====-\n\n";
 		return 0;
 
 	}
 
 	std::cout << "\n-===== Last DataFrame Recorded =====-\n\n";
 
-	std::cout << "STATE:\t\t";
+	std::cout << "STATE:\t\t\t";
 	switch (state)
 	{
 	case 0:
@@ -96,7 +96,7 @@ uint32_t TelemetryBlackBox::getLastDataframe() {
 
 	std::cout << "BARO_ERROR:\t\t" << baro_error << "\n";
 
-	std::cout << "ALTITUDE:\t\t" << altitude << "\n";
+	std::cout << "ALTITUDE:\t\t" << altitude << " (" << std::bitset<16>(altitude) << ")\n";
 
 	std::cout << "CHECKSUM:\t\t" << std::bitset<8>(checksum) << "\n\n";
 
@@ -105,4 +105,22 @@ uint32_t TelemetryBlackBox::getLastDataframe() {
 	else
 		return 0xFFFFFFFF;
 
+}
+
+void TelemetryBlackBox::getAllRecords() {
+	
+	uint32_t buffer[16];
+
+	unsigned int records = Buffer::instance().getBuffer(buffer);
+
+	std::cout << "\n-===== DataFrame Records =====-\n"
+		<< "There are " << records << " records:\n\n";
+
+	for (int i = 0; i < 16; i++) {
+		std::cout << (i + 1) << ":\t" 
+			<< std::bitset<32>(buffer[i]) << "\n";
+	}
+
+	std::cout << "\n\n";
+	
 }

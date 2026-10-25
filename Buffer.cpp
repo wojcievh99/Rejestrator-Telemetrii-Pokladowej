@@ -126,3 +126,15 @@ bool Buffer::getLastDataFrame(
 
 	return true;
 }
+
+unsigned int Buffer::getBuffer(uint32_t (&buffer)[16]) {
+	
+	for (int i = 0; i < 16; i++) {
+		buffer[i] = cyclicBuffer_[i];
+	}
+
+	return (records_ > 16 ? 16 : records_);
+
+}
+
+	
