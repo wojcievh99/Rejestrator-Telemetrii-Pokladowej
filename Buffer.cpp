@@ -78,18 +78,55 @@ void Buffer::checkSum(uint32_t& dataFrame) {
 
 }
 
-void Buffer::recordState(uint8_t state, bool parachute,
+bool Buffer::validateChecksum(uint32_t dataFrame) {
+
+	uint8_t correct_checksum =
+		(dataFrame & 0xFF) ^
+		((dataFrame & (0xFF << 8)) >> 8) ^
+		((dataFrame & (0xFF << 16)) >> 16);
+
+	uint8_t alleged_checksum = dataFrame >> 24;
+
+	return (correct_checksum == alleged_checksum);
+
+}
+
+
+void Buffer::recordDataFrame(uint8_t state, bool parachute,
 	bool baro_error, uint16_t altitude) 
 {
-	uint32_t dataFrame = 0;
+	uint32_t df = 0;
 
-	setState(dataFrame, state);
-	setParachute(dataFrame, parachute);
-	setBaroError(dataFrame, baro_error);
-	setAltitude(dataFrame, altitude);
-	checkSum(dataFrame);
+	setState(df, state);
+	setParachute(df, parachute);
+	setBaroError(df, baro_error);
+	setAltitude(df, altitude);
+	checkSum(df);
 
 	makeSpaceInBuffer();
-	cyclicBuffer_[0] = dataFrame;
+	cyclicBuffer_[0] = df;
 
+}
+
+uint32_t Buffer::getLastDataFrame(uint8_t& state, bool& parachute,
+	bool& baro_error, uint16_t& altitude, uint8_t& checksum) 
+{
+	uint32_t df = cyclicBuffer_[0];
+
+	// state:
+	state = (df & 0b111);
+
+	// parachute:
+	parachute = ((df & (1 << 3)) >> 3);
+
+	// baro_error:
+	baro_error = ((df & (1 << 4)) >> 4);
+
+	// altitude:
+	altitude = ((df & (0xFFFF << 8)) >> 8);
+
+	// checksum:
+	checksum = df >> 24;
+
+	return df;
 }

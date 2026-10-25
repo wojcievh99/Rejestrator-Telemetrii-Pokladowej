@@ -10,6 +10,14 @@ enum RocketState : uint8_t {
 };
 
 class TelemetryBlackBox {
+
+	RocketState state_{DISARM};
+
+	bool parachute_ = false; 
+	bool baro_error_ = false;
+
+	uint16_t altitude_ = 0;
+
 public:
 	void onRocketStateChange(RocketState state);
 	void onParachuteDeployed();

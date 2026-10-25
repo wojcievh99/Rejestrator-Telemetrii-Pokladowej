@@ -3,6 +3,7 @@
 # include < cstdint >
 
 // cyclic bufer 
+// here are all bit operations 
 
 class Buffer {
 
@@ -34,8 +35,14 @@ public:
 	Buffer(const Buffer&) = delete;
 	Buffer& operator=(const Buffer&) = delete;
 
-	void recordState(uint8_t state, bool parachute,
+	bool validateChecksum(uint32_t dataFrame);
+
+	void recordDataFrame(uint8_t state, bool parachute,
 		bool baro_error, uint16_t altitude);
+
+	// decoding also
+	uint32_t getLastDataFrame(uint8_t& state, bool& parachute,
+		bool& baro_error, uint16_t& altitude, uint8_t& checksum);
 
 };
 
