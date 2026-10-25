@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="RejestratorTelemetriiPokladowej.vcxproj" />
+  <Project Path="RejestratorTelemetriiPokladowej.vcxproj" Id="a240fd6b-8edb-4e33-8f49-5501dbfd3131" />
 </Solution>
