@@ -6,19 +6,6 @@ Buffer& Buffer::instance() {
 	return i;
 }
 
-void Buffer::makeSpaceInBuffer() {
-	cyclicBuffer_[15] = 0;
-
-	// moving
-	for (int i = 15; i >= 1; i--) {
-
-		cyclicBuffer_[i] = cyclicBuffer_[i - 1];
-		cyclicBuffer_[i - 1] = 0;
-
-	}
-	// thanks to this cyclicBuffer[0] is empty
-}
-
 void Buffer::setState(uint32_t& dataFrame, uint8_t state) {
 
 	// clean state(for clarity) (3 bits) and set new one
@@ -103,11 +90,10 @@ void Buffer::recordDataFrame(uint8_t state, bool parachute,
 	setAltitude(df, altitude);
 	checkSum(df);
 
-	makeSpaceInBuffer();
-	cyclicBuffer_[0] = df;
+	// saving over the oldest dataframe
+	cyclicBuffer_[records_ % 16] = df;
 
-	if (bufferEmpty_)
-		bufferEmpty_ = false;
+	records_++;
 
 }
 
@@ -117,11 +103,11 @@ bool Buffer::getLastDataFrame(
 ) 
 {
 
-	if (bufferEmpty_)
+	if (!records_)
 		return false;
 
 	// dataframe:
-	df = cyclicBuffer_[0];
+	df = cyclicBuffer_[(records_ - 1) % 16];
 
 	// state:
 	state = (df & 0b111);

@@ -8,6 +8,9 @@ void TelemetryBlackBox::onRocketStateChange(RocketState state) {
 
 	state_ = state;
 
+	if (!baro_error_ and (state_ == 0 or state_ == 4))
+		altitude_ = 0;
+
 }
 
 void TelemetryBlackBox::onParachuteDeployed() {
@@ -20,12 +23,20 @@ void TelemetryBlackBox::onBaroReading(bool error, uint16_t value) {
 	
 	if (!error) {
 
-		altitude_ = value;
 		baro_error_ = false;
 
+		if (state_ != 0 and state_ != 4)
+			altitude_ = value;
+		else
+			altitude_ = 0;
+
 	}
-	else
+	else {
+
 		baro_error_ = true;
+		altitude_ = 0xFFFF;
+
+	}
 	
 }
 

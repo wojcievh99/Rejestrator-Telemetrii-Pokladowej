@@ -8,7 +8,7 @@
 class Buffer {
 
 	uint32_t cyclicBuffer_[16] = { 0 };
-	bool bufferEmpty_ = true;
+	unsigned int records_ = 0;
 
 	/*
 		0-2		state
@@ -18,8 +18,6 @@ class Buffer {
 		8-23	altitude (16 bits)
 		24-31	checksum
 	*/
-
-	void makeSpaceInBuffer();
 
 	// it is important to use those in this order:
 	void setState(uint32_t& dataFrame, uint8_t state);
