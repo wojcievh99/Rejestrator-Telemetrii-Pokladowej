@@ -19,14 +19,17 @@ public:
 	*/
 	void onBaroReading(bool error, uint16_t value);
 	/**
-	* @brief Pobiera bieżący stan , składa go w 32 - bitow ą ramk ę z sumą kontroln ą
+	* @brief Pobiera bieżący stan , składa go w 32 - 
+	bitow ą ramk ę z sumą kontroln ą
 	i zapisuje do bufora .
 	*/
 	void recordCurrentState();
 	/**
-	* @brief Funkcja pobiera ostatni ą ramk ę z bufora kołowego , dekoduje ją oraz
+	* @brief Funkcja pobiera ostatni ą ramk ę z bufora kołowego , 
+	dekoduje ją oraz
 	loguje zdekodowane warto ści w czytelny spos ób na konsol ę.
-	* @Return Ostatnia ramka zapisana do bufora , jeśli xor się zgadza .
+	* @Return Ostatnia ramka zapisana do bufora , 
+	jeśli xor się zgadza .
 	0 xFFFFFFFF jeśli suma kontrolna jest niepoprawna .
 	*/
 	uint32_t getLastDataframe();

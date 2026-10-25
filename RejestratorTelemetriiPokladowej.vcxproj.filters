@@ -21,7 +21,7 @@
     <ClCompile Include="TelemetryBlackBox.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="DataFrame.cpp">
+    <ClCompile Include="Buffer.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +29,7 @@
     <ClInclude Include="TelemetryBlackBox.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
-    <ClInclude Include="DataFrame.h">
+    <ClInclude Include="Buffer.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
   </ItemGroup>
