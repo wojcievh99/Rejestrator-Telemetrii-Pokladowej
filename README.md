@@ -11,14 +11,14 @@ Domyślnie napisałem 5 testów:\
     2. Odczytuje wysokość (i inne dane) po wystąpieniu awarii barometru\
     3. Dodaje nowy odczyt barometru i odczytuje wysokość po zmianie statusu na LANDED\
     4. Odczytuje wysokość po wystąpieniu kolejno: awarii barometru i wylądowaniu\
-    5. Zapisuje 17 ramek i odczytuje cały bufor kołowy\
+    5. Zapisuje 17 ramek i odczytuje cały bufor kołowy
 
 ## Struktura Projektu
 
 Klasy i pliki:\
     1. TelemetryBlackBox.h (.cpp)\
     2. Buffer.h (.cpp)\
-    3. tests.h (.cpp)\
+    3. tests.h (.cpp)
 
 ## Specyfikacja plików
 
