@@ -24,12 +24,18 @@
     <ClCompile Include="Buffer.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="tests.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TelemetryBlackBox.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
     <ClInclude Include="Buffer.h">
+      <Filter>Pliki źródłowe</Filter>
+    </ClInclude>
+    <ClInclude Include="tests.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
   </ItemGroup>
