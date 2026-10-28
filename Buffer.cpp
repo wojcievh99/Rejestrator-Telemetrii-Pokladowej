@@ -8,7 +8,6 @@ Buffer& Buffer::instance() {
 
 void Buffer::setState(uint32_t& dataFrame, uint8_t state) {
 
-	// clean state(for clarity) (3 bits) and set new one
 	dataFrame = dataFrame & 0xFFFFFFF8;
 	dataFrame = dataFrame | (state & 0x7);
 	
@@ -18,6 +17,8 @@ void Buffer::setParachute(uint32_t& dataFrame, bool parachute) {
 
 	dataFrame = dataFrame & ~(1 << 3); 
 
+	// jeśli parachute == false, to odpowiedni bit 
+	// jest ustawiony już na zero 
 	if (parachute)
 		dataFrame = dataFrame | (1 << 3);
 
@@ -27,6 +28,8 @@ void Buffer::setBaroError(uint32_t& dataFrame, bool baro_error) {
 
 	dataFrame = dataFrame & ~(1 << 4); 
 	
+	// jeśli baro_error == false, to odpowiedni bit 
+	// jest ustawiony już na zero
 	if (baro_error)
 		dataFrame = dataFrame | (1 << 4);
 
@@ -34,32 +37,36 @@ void Buffer::setBaroError(uint32_t& dataFrame, bool baro_error) {
 
 void Buffer::setAltitude(uint32_t& dataFrame, uint16_t altitude) {
 
-	// clean 8-23
+	// czyszczenie 8-23
 	dataFrame = dataFrame & ~(0xFFFF << 8);
 
-	uint8_t state = dataFrame & (0b111); // first 3 bits
+	// odczyt state na pierwszych 3 bitach
+	uint8_t state = dataFrame & (0b111); 
+
 	if (state == 0 or state == 4)
 		altitude = 0;
-	// set to min
+	
+	// odczyt baro_error na 4tym bicie
+	bool baro_error = (dataFrame & (1 << 4)) >> 4; 
 
-	bool baro_error = (dataFrame & (1 << 4)) >> 4; // 4th bit
+	// baro_error ma pierszeństwo względem state
 	if (baro_error == true)
 		altitude = 0xFFFF;
-	// set to max
-
+	
+	// zapisz na bitach 8-23
 	dataFrame = dataFrame | (altitude << 8);
 
 }
 
 void Buffer::checkSum(uint32_t& dataFrame) {
 
-	// compute
+	// obliczenie
 	uint8_t checksum =
 		(dataFrame & 0xFF) ^
 		((dataFrame & (0xFF << 8)) >> 8) ^
 		((dataFrame & (0xFF << 16)) >> 16);
 
-	// save
+	// czyszczenie 24-31 i zapisanie
 	dataFrame = dataFrame & ~(0xFF << 24);
 	dataFrame = dataFrame | (checksum << 24);
 
@@ -90,7 +97,7 @@ void Buffer::recordDataFrame(uint8_t state, bool parachute,
 	setAltitude(df, altitude);
 	checkSum(df);
 
-	// saving over the oldest dataframe
+	// nadpisuję najstarszy zapis
 	cyclicBuffer_[records_ % 16] = df;
 
 	records_++;
@@ -102,7 +109,7 @@ bool Buffer::getLastDataFrame(
 	uint16_t& altitude, uint8_t& checksum, uint32_t& df
 ) 
 {
-
+	// nie ma żadnych zapisów w buforze
 	if (!records_)
 		return false;
 
@@ -129,6 +136,7 @@ bool Buffer::getLastDataFrame(
 
 unsigned int Buffer::getBuffer(uint32_t (&buffer)[16]) {
 	
+	// kopiuję do referencji
 	for (int i = 0; i < 16; i++) {
 		buffer[i] = cyclicBuffer_[i];
 	}

@@ -8,6 +8,7 @@ void TelemetryBlackBox::onRocketStateChange(RocketState state) {
 
 	state_ = state;
 
+	// błąd barometru ma pierwszeństwo 
 	if (!baro_error_ and (state_ == 0 or state_ == 4))
 		altitude_ = 0;
 
@@ -25,6 +26,8 @@ void TelemetryBlackBox::onBaroReading(bool error, uint16_t value) {
 
 		baro_error_ = false;
 
+		// dla tych wartości state_, altitude_ 
+		// powinno wynosić 0
 		if (state_ != 0 and state_ != 4)
 			altitude_ = value;
 		else
@@ -116,9 +119,11 @@ void TelemetryBlackBox::getAllRecords() {
 	std::cout << "\n-===== DataFrame Records =====-\n"
 		<< "There are " << records << " records:\n\n";
 
-	for (int i = 0; i < 16; i++) {
+	for (int i = 0; i < records; i++) {
+
 		std::cout << (i + 1) << ":\t" 
 			<< std::bitset<32>(buffer[i]) << "\n";
+
 	}
 
 	std::cout << "\n\n";
