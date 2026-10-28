@@ -1,24 +1,26 @@
 # RejestratorTelemetriiPokladowej
 
-Zadanie rekruacyjne do Simle Simba Awionika Software
+Zadanie rekruacyjne do Simle Simba Awionika Software\
 (nie będę streszczał wymagań, gdyż są one w zadaniu)
 
 ## Instrukcja uruchomienia projektu
 
 Po kompilacji wyświetli się program testowy na konsoli, dzięki któremu można przetestować program.
-Domyślnie napisałem 5 testów: 
-	1. Pobiera ostatnią ramkę w momencie gdy nie ma żadnego zapisu
-    2. Odczytuje wysokość (i inne dane) po wystąpieniu awarii barometru
-    3. Dodaje nowy odczyt barometru i odczytuje wysokość po zmianie statusu na LANDED
-    4. Odczytuje wysokość po wystąpieniu kolejno: awarii barometru i wylądowaniu
-    5. Zapisuje 17 ramek i odczytuje cały bufor kołowy
+Domyślnie napisałem 5 testów:\
+	1. Pobiera ostatnią ramkę w momencie gdy nie ma żadnego zapisu\
+    2. Odczytuje wysokość (i inne dane) po wystąpieniu awarii barometru\
+    3. Dodaje nowy odczyt barometru i odczytuje wysokość po zmianie statusu na LANDED\
+    4. Odczytuje wysokość po wystąpieniu kolejno: awarii barometru i wylądowaniu\
+    5. Zapisuje 17 ramek i odczytuje cały bufor kołowy\
 
 ## Struktura Projektu
 
-Klasy i pliki:
-    1. TelemetryBlackBox.h (.cpp)
-    2. Buffer.h (.cpp)
-    3. tests.h (.cpp)
+Klasy i pliki:\
+    1. TelemetryBlackBox.h (.cpp)\
+    2. Buffer.h (.cpp)\
+    3. tests.h (.cpp)\
+
+## Specyfikacja plików
 
 ### TelemetryBlackBox
 
